@@ -191,7 +191,7 @@ def test_mutation_with_input_type():
     @strawberry.input
     class SayInput:
         name: str
-        age: int = strawberry.field(description='abc', is_input=True)
+        age: int = strawberry.field(description='abc', is_input=True, init=True)
 
     @strawberry.type
     class Query:

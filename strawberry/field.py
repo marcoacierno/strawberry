@@ -148,7 +148,8 @@ class strawberry_field(dataclasses.Field):
         name=None,
         description=None,
         metadata=None,
-        permission_classes=None
+        permission_classes=None,
+        init=False
     ):
         self.field_name = name
         self.field_description = description
@@ -161,7 +162,7 @@ class strawberry_field(dataclasses.Field):
             # TODO:
             default=dataclasses.MISSING,
             default_factory=dataclasses.MISSING,
-            init=True,
+            init=init,
             repr=True,
             hash=None,
             # TODO: this needs to be False when init is False
@@ -285,6 +286,7 @@ def field(
     resolver=None,
     is_input=False,
     is_subscription=False,
+    init=False,
     permission_classes=None
 ):
     """Annotates a method or property as a GraphQL field.
@@ -309,6 +311,7 @@ def field(
         is_input=is_input,
         is_subscription=is_subscription,
         permission_classes=permission_classes,
+        init=init,
     )
 
     # when calling this with parens we are going to return a strawberry_field
