@@ -54,13 +54,14 @@ def get_graphql_type_for_annotation(
 
         elif is_union(annotation):
             types = annotation.__args__
+            name = field_name or getattr(annotation, "_name", None)
             non_none_types = [x for x in types if x != None.__class__]  # noqa:E721
 
             # optionals are represented as Union[type, None]
             if len(non_none_types) == 1:
                 is_field_optional = True
                 graphql_type = get_graphql_type_for_annotation(
-                    non_none_types[0], field_name, force_optional=True
+                    non_none_types[0], name, force_optional=True
                 )
             else:
                 is_field_optional = None.__class__ in types
@@ -70,7 +71,7 @@ def get_graphql_type_for_annotation(
                 # also we want to make sure we have been passed
                 # strawberry types
                 graphql_type = GraphQLUnionType(
-                    field_name, [type.field for type in types]
+                    name, [type.field for type in types]
                 )
         else:
             graphql_type = REGISTRY.get(annotation)
