@@ -70,9 +70,13 @@ def get_graphql_type_for_annotation(
                 # so we want to return a nice error
                 # also we want to make sure we have been passed
                 # strawberry types
+                def _resolve_type(self, value, _type):
+                    return self.field
+
                 graphql_type = GraphQLUnionType(
                     name, [type.field for type in types]
                 )
+                graphql_type.resolve_type =_resolve_type
         else:
             graphql_type = REGISTRY.get(annotation)
 
