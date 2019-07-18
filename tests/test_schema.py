@@ -191,6 +191,7 @@ def test_mutation_with_input_type():
     @strawberry.input
     class SayInput:
         name: str
+        age: int = strawberry.field(description='abc', is_input=True)
 
     @strawberry.type
     class Query:
@@ -204,7 +205,7 @@ def test_mutation_with_input_type():
 
     schema = strawberry.Schema(query=Query, mutation=Mutation)
 
-    query = 'mutation { say(input: { name: "Patrick"}) }'
+    query = 'mutation { say(input: { name: "Patrick", age: 10 }) }'
 
     result = graphql_sync(schema, query)
 
