@@ -161,7 +161,7 @@ class strawberry_field(dataclasses.Field):
             # TODO:
             default=dataclasses.MISSING,
             default_factory=dataclasses.MISSING,
-            init=False,
+            init=True,
             repr=True,
             hash=None,
             # TODO: this needs to be False when init is False
